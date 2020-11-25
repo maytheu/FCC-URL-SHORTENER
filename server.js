@@ -45,16 +45,29 @@ app.get('/api/hello', function(req, res) {
   res.json({ greeting: 'hello API' });
 });
 
+//thajks to this solution tgat help to generate this function https://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript/1349426#
+function generateUrl() {
+   var result           = '';
+   var characters       = 'abcdefghijklmnopqrstuvwxyz0123456789';
+   var charactersLength = characters.length;
+   for ( var i = 0; i < 5; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+   }
+   return result;
+}
+
 app.post("/api/shorturl/new", (req, res)=>{
  let url = req.body.url
-	let shortUrl = req.body.short_url.toLowerCase()
-	console.log(shortUrl==""?1:2)
+	let short = req.body.short_url.toLowerCase()
+	let ranUrl = generateUrl()
+	let shortUrl = short === ""?ranUrl:short
+
  //check mongoose connection =  1 fir connection
  console.log(mongoose.connection.readyState)
 
 //if the user do not enter a string, gejerateva random string
-	let ranUrl = 
-	let result = url.replace(/(^\w+:|^)\/\//ig, "").split(/[/?#]/)[0]
+
+	let result = url.replace(/(^\w+:|^)\/\//ig, "").split(/[/?#]/)[0];
  console.log(result)
 
 	dns.lookup(result, (err, address, family) => {
