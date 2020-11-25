@@ -109,6 +109,19 @@ app.post("/api/shorturl/new", (req, res)=>{
 });
 })
 
+//get ghe url based on the url short
+app.get("/api/shorturl/:short_url", (req, res)=>{
+ let short_url = req.params.short_url
+  console.log(short_url)
+  Url.find({shortUrl:short_url}, (err,url)=>{
+    
+    if (err) return res.json({error: "Invalid short url"})
+    console.log(err)
+    res.redirect(url[0].originalUrl)
+    console.log(url[0])
+  })
+})
+	
 app.listen(port, function() {
   console.log(`Listening on port ${port}`);
 });
